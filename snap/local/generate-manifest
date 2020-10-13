@@ -1,0 +1,17 @@
+#!/bin/bash
+
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
+if [ -x "$(command -v dpkg-query --version)" ]; then
+  dpkg-query --show
+fi
+
+if [ -x "$(command -v snap --version)" ]; then
+  snap list | tail -n +2 | while read -r snap_name snap_version snap_revision snap_channel snap_publisher snap_notes
+  do
+      parsed_snap_channel=${snap_channel#"latest/"}
+      parsed_snap_channel=${parsed_snap_channel%"/…"}
+      echo -e "snap:${snap_name}\t${parsed_snap_channel}\t${snap_revision}"
+  done
+fi

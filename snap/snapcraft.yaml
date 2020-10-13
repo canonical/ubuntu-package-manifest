@@ -1,0 +1,38 @@
+name: ubuntu-package-manifest
+version: '0.1'
+base: core20
+summary: Helpful utility to generate a package manifest
+description: |
+  Helpful utility to generate a package manifest including package names
+  and versions for both deb packages and snap packges.
+
+  Dependencies:
+  * `dpkg` for including deb packages
+  * `snapd` for including snap packages
+
+  Usage:
+  ubuntu-package-manifest
+
+grade: stable
+confinement: classic
+
+apps:
+  ubuntu-package-manifest:
+    environment:
+      PATH: "$SNAP/usr/bin:$SNAP/bin/:$PATH"
+      LC_ALL: "C.UTF-8"
+    command: usr/bin/generate-manifest
+    plugs:
+      - home
+
+parts:
+  ubuntu-package-manifest:
+    plugin: dump
+    source: snap/local
+    override-build: |
+      chmod +x generate-manifest
+      snapcraftctl build
+    organize:
+      generate-manifest: usr/bin/generate-manifest
+    stage:
+      - usr/bin/generate-manifest
