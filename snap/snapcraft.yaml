@@ -14,7 +14,13 @@ description: |
   ubuntu-package-manifest
 
 grade: stable
-confinement: classic
+confinement: strict
+
+
+#snap connect ubuntu-package-manifest:system-data
+plugs:
+  system-data: #snap connect ubuntu-package-manifest:system-data
+    interface: system-backup
 
 apps:
   ubuntu-package-manifest:
@@ -22,8 +28,6 @@ apps:
       PATH: "$SNAP/usr/bin:$SNAP/bin/:$PATH"
       LC_ALL: "C.UTF-8"
     command: usr/bin/generate-manifest
-    plugs:
-      - home
 
 parts:
   ubuntu-package-manifest:
@@ -36,3 +40,10 @@ parts:
       generate-manifest: usr/bin/generate-manifest
     stage:
       - usr/bin/generate-manifest
+
+  ubuntu-package-manifest-packages:
+    plugin: nil
+    stage-packages:
+      - dpkg
+      - snapd
+      - coreutils
