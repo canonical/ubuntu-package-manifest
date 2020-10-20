@@ -35,15 +35,24 @@ parts:
     source: snap/local
     override-build: |
       chmod +x generate-manifest
+      chmod +x list-snaps.py
       snapcraftctl build
     organize:
       generate-manifest: usr/bin/generate-manifest
+      list-snaps.py: usr/bin/list-snaps.py
     stage:
       - usr/bin/generate-manifest
+      - usr/bin/list-snaps.py
 
-  ubuntu-package-manifest-packages:
-    plugin: nil
+  ubuntu-package-manifest-dependencies:
+    plugin: python
     stage-packages:
       - dpkg
       - snapd
       - coreutils
+      - python
+    python-packages:
+      - pip
+      - setuptools
+      - wheel
+      - pyyaml

@@ -3,16 +3,14 @@
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
+DPKG_ADMIN_DIR="/var/lib/snapd/hostfs/var/lib/dpkg/"
 # snap list
-if [[ -f "/var/lib/snapd/hostfs/var/lib/dpkg/status" ]] && [[ -x "$(command -v $SNAP/usr/bin/dpkg-query --version)" ]]; then
-    $SNAP/usr/bin/dpkg-query --show --admindir=/var/lib/snapd/hostfs/var/lib/dpkg/
+if [[ -f "${DPKG_ADMIN_DIR}status" ]] && [[ -x "$(command -v $SNAP/usr/bin/dpkg-query --version)" ]]; then
+    $SNAP/usr/bin/dpkg-query --show --admindir="${DPKG_ADMIN_DIR}"
 fi
 
-if [ -x "$(command -v $SNAP/usr/bin/snap --version)" ]; then
-  $SNAP/usr/bin/snap list | $SNAP/usr/bin/tail -n +2 | while read -r snap_name snap_version snap_revision snap_channel snap_publisher snap_notes
-  do
-      parsed_snap_channel=${snap_channel#"latest/"}
-      parsed_snap_channel=${parsed_snap_channel%"/…"}
-      echo -e "snap:${snap_name}\t${parsed_snap_channel}\t${snap_revision}"
-  done
+SNAP_ROOT_DIR="/var/lib/snapd/hostfs/"
+SNAP_ADMIN_DIR="${SNAP_ROOT_DIR}var/lib/snapd/"
+if [[ -d "${SNAP_ADMIN_DIR}" ]] && [[ -d "${SNAP_ROOT_DIR}" ]] && [[ -x "$(command -v $SNAP/usr/bin/list-snaps.py --help)" ]]; then
+    $SNAP/usr/bin/list-snaps.py --rootdir="${SNAP_ROOT_DIR}" --admindir="${SNAP_ADMIN_DIR}"
 fi
