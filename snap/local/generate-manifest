@@ -10,7 +10,6 @@ if [[ -f "${DPKG_ADMIN_DIR}status" ]] && [[ -x "$(command -v $SNAP/usr/bin/dpkg-
 fi
 
 SNAP_ROOT_DIR="/var/lib/snapd/hostfs/"
-SNAP_ADMIN_DIR="${SNAP_ROOT_DIR}var/lib/snapd/"
-if [[ -d "${SNAP_ADMIN_DIR}" ]] && [[ -d "${SNAP_ROOT_DIR}" ]] && [[ -x "$(command -v $SNAP/usr/bin/list-snaps.py --help)" ]]; then
-    $SNAP/usr/bin/list-snaps.py --rootdir="${SNAP_ROOT_DIR}" --admindir="${SNAP_ADMIN_DIR}"
+if [[ -d "${SNAP_ROOT_DIR}" ]] && [[ -x "$(command -v $SNAP/usr/bin/list-snaps.py --help)" ]]; then
+    $SNAP/usr/bin/list-snaps.py --rootdir="${SNAP_ROOT_DIR}"
 fi
