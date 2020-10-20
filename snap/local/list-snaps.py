@@ -9,7 +9,6 @@ DEFAULT_ROOT_DIR = "/"
 def main(rootdir=DEFAULT_ROOT_DIR):
     installed_snap_details = []
     snap_state_file_path = os.path.join(rootdir, "var/lib/snapd/state.json")
-    #snap_state_file_path = "/home/philroche/Working/scratch/state.json"
     with open(snap_state_file_path, 'r') as snap_state_file:
         snap_state = json.load(snap_state_file)
         snap_names = list(snap_state['data']['snaps'].keys())
