@@ -45,13 +45,8 @@ parts:
       - usr/bin/list-snaps.py
 
   ubuntu-package-manifest-dependencies:
-    plugin: python
+    plugin: nil
     stage-packages:
       - dpkg
       - coreutils
       - python
-    python-packages:
-      - pip
-      - setuptools
-      - wheel
-      - pyyaml
