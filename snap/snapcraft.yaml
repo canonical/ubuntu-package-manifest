@@ -48,7 +48,6 @@ parts:
     plugin: python
     stage-packages:
       - dpkg
-      - snapd
       - coreutils
       - python
     python-packages:
