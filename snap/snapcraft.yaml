@@ -1,5 +1,5 @@
 name: ubuntu-package-manifest
-version: '0.1'
+version: '0.2'
 base: core20
 summary: Helpful utility to generate a package manifest
 description: |
